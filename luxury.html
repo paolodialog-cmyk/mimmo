@@ -130,6 +130,8 @@ button,input,textarea,select{font:inherit;color:inherit}
 
 .btn-clear{display:block;width:100%;margin-top:10px;min-height:44px;background:transparent;border:1px dashed var(--line-strong,var(--line));border-radius:var(--r-btn,999px);color:var(--muted);font:600 14px/1 'Barlow',sans-serif;cursor:pointer}
 .btn-clear:hover,.btn-clear.armed{border-style:solid;border-color:#c62828;color:#c62828}
+.hours{margin:0;display:grid;gap:6px}.hours div{display:flex;justify-content:space-between;gap:16px;border-bottom:1px dotted var(--line);padding-bottom:4px}.hours dt{font-weight:600}.hours dd{margin:0;text-align:right;font-variant-numeric:tabular-nums}
+.privacy p{max-width:72ch;line-height:1.65}.privacy h3{font-family:var(--display);font-size:24px;margin:28px 0 6px}
 
 .kicker{font:700 14px/1 'Barlow Condensed',sans-serif;letter-spacing:.2em;text-transform:uppercase;color:var(--accent);margin-bottom:16px;display:flex;align-items:center;gap:10px}
 .kicker::before{content:"";width:34px;height:2px;background:currentColor}
@@ -343,6 +345,7 @@ body{font-weight:400;padding-bottom:0}
 .comp[data-comp="preparati"] .tr-ph{aspect-ratio:4/4.8}
 @media (max-width:760px){.pin b{font-size:16px}}
 .rc .rc-clear{color:#7a7067;border-color:#b8afa3;border-radius:2px;font-family:'Barlow',sans-serif;margin-top:8px}.rc .rc-clear.armed,.rc .rc-clear:hover{color:#a3201f;border-color:#a3201f}
+.vgrid .hours div{border-top:0;padding-top:0}
 
 </style>
 </head>
@@ -359,13 +362,16 @@ const IMGS={"banco": "data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD/2wBDAAg
 /* ===== Il Macellaio da Mimmo — codice condiviso (versione A e B) ===== */
 const BIZ = {
   name: 'Il Macellaio da Mimmo',
-  owner: 'Pace Cosimo',
+  owner: 'C. De Pace',
+  piva: '13251330968',
+  place2: 'Mercato Comunale Coperto di Morsenchio',
+  hours: [['Lunedì', '7:30–13:00'], ['Martedì – Sabato', '7:30–13:00 · 15:50–19:30'], ['Domenica', 'chiuso']],
   phoneDisplay: '340 926 8083',
   phoneIntl: '393409268083',
   email: 'Ilmacellaiodamimmo@gmail.com',
   instagram: 'https://www.instagram.com/macelleria_da.mimmo/',
   instagramHandle: '@macelleria_da.mimmo',
-  facebook: 'https://www.facebook.com/search/top?q=IL%20Macellaio%20da%20MIMMO',
+  facebook: 'https://www.facebook.com/p/IL-Macellaio-da-MIMMO-61553862684144/',
   place: 'Mercato di Morsenchio',
   address: 'Largo Guerrieri Gonzaga 1, 20138 Milano',
   maps: 'https://www.google.com/maps/search/?api=1&query=' + encodeURIComponent('Mercato di Morsenchio Milano')
@@ -565,13 +571,13 @@ function pageMimmo() {
 }
 function pageDove() {
   return `<section class="wrap page-h"><div class="kicker">Dove siamo</div><h1 class="h1">Al ${BIZ.place}</h1><p class="lead">Mimmo ti aspetta al banco, nel mercato comunale coperto di Milano.</p></section>
-<div class="wrap cards2"><div class="info"><h3>Indirizzo</h3><p>${BIZ.place}<br>${BIZ.address}</p><p><span class="chip-tbc">numero banco da confermare</span></p><p><a href="${BIZ.maps}" target="_blank" rel="noopener">Apri su Google Maps →</a></p></div>
-<div class="info"><h3>Orari</h3><p><span class="chip-tbc">giorni e orari da confermare con Mimmo</span></p></div>
+<div class="wrap cards2"><div class="info"><h3>Indirizzo</h3><p>${BIZ.place}<br>${BIZ.address}</p><p><a href="${BIZ.maps}" target="_blank" rel="noopener">Apri su Google Maps →</a></p></div>
+<div class="info"><h3>Orari</h3>${hoursHTML()}</div>
 <div class="info"><h3>Scrivi o chiama</h3><p><a href="${waGeneric}" target="_blank" rel="noopener">WhatsApp ${BIZ.phoneDisplay}</a></p><p><a href="tel:+${BIZ.phoneIntl}">Chiama ${BIZ.phoneDisplay}</a></p><p><a href="mailto:${BIZ.email}">${BIZ.email}</a></p></div>
 <div class="info"><h3>Social</h3><p><a href="${BIZ.instagram}" target="_blank" rel="noopener">Instagram ${BIZ.instagramHandle}</a></p><p><a href="${BIZ.facebook}" target="_blank" rel="noopener">Facebook · Il Macellaio da Mimmo</a></p></div></div>`;
 }
 function footerHTML() {
-  return `<footer class="ftr"><div class="ftr-in"><div>${logoSVG()}<p style="margin:12px 0 0"><small>Il Macellaio da Mimmo di ${BIZ.owner}<br>${BIZ.place}, Milano<br>P.IVA: <span style="background:#fff1b8;color:#222;border-radius:4px;padding:0 6px">da inserire</span></small></p></div>
+  return `<footer class="ftr"><div class="ftr-in"><div>${logoSVG()}<p style="margin:12px 0 0"><small>Il Macellaio da Mimmo di ${BIZ.owner}<br>${BIZ.place}, Milano<br>P.IVA ${BIZ.piva}<br><a href="#/privacy" style="display:inline;text-decoration:underline">Privacy</a></small></p></div>
 <div><h4>Contatti</h4><a href="${waGeneric}" target="_blank" rel="noopener">WhatsApp ${BIZ.phoneDisplay}</a><a href="tel:+${BIZ.phoneIntl}">Chiama ${BIZ.phoneDisplay}</a><a href="mailto:${BIZ.email}">${BIZ.email}</a></div>
 <div><h4>Seguici</h4><a href="${BIZ.instagram}" target="_blank" rel="noopener">Instagram ${BIZ.instagramHandle}</a><a href="${BIZ.facebook}" target="_blank" rel="noopener">Facebook</a><h4 style="margin-top:18px">Sul sito</h4><a href="#/banco">Il banco</a><a href="#/ordine">La mia lista</a></div></div></footer>`;
 }
@@ -584,6 +590,16 @@ document.addEventListener('click', e => {
   b.dataset.armed = '1'; const t = b.textContent; b.textContent = 'Tocca di nuovo per svuotare'; b.classList.add('armed');
   setTimeout(() => { if (b.isConnected) { delete b.dataset.armed; b.textContent = t; b.classList.remove('armed'); } }, 3000);
 });
+
+function hoursHTML() { return '<dl class="hours">' + BIZ.hours.map(([d, h]) => `<div><dt>${d}</dt><dd>${h}</dd></div>`).join('') + '</dl>'; }
+function pagePrivacy() {
+  return `<section class="wrap page-h privacy" style="max-width:860px"><div class="kicker">Informativa</div><h1 class="h1">Privacy</h1>
+<p><b>Titolare del trattamento:</b> Il Macellaio da Mimmo di ${BIZ.owner}, P.IVA ${BIZ.piva}, ${BIZ.place2}, ${BIZ.address}. Email: <a href="mailto:${BIZ.email}">${BIZ.email}</a>.</p>
+<h3>Dati raccolti dal sito</h3><p>Questo sito non chiede registrazioni, non raccoglie dati personali e non usa cookie di profilazione o di statistica. La lista dei prodotti che componi resta salvata solo nel tuo browser (memoria locale del dispositivo) per non perderla tra una visita e l\u2019altra: puoi cancellarla in ogni momento con \u201cSvuota la lista\u201d, e si svuota da sola quando la invii.</p>
+<h3>Ordini via WhatsApp o email</h3><p>Il messaggio con la lista lo invii tu, con la tua app. Nome, numero di telefono e contenuto del messaggio vengono usati solo per preparare e confermare il tuo ordine, e non vengono ceduti a terzi. Per l\u2019invio si applicano anche le informative di WhatsApp (Meta) e del tuo servizio di posta.</p>
+<h3>Dati tecnici</h3><p>Il servizio che ospita il sito pu\u00f2 registrare dati tecnici di navigazione (per esempio indirizzo IP e pagine richieste) per la sicurezza e il funzionamento del servizio.</p>
+<h3>I tuoi diritti</h3><p>Puoi chiedere in ogni momento di accedere ai tuoi dati, correggerli o cancellarli scrivendo a <a href="mailto:${BIZ.email}">${BIZ.email}</a>. Hai anche il diritto di presentare reclamo al Garante per la protezione dei dati personali.</p></section>`;
+}
 
 /* ---------- logo: firma "da Mimmo" dentro la lama. Due varianti: coltello da macellaio (tipo Sanelli) o mannaia ---------- */
 const LOGO_VARIANT = window.__LOGO || 'coltello';
@@ -731,8 +747,8 @@ const R = {
 ${bancoHTML()}
 <section class="tipband"><div class="ey c">Il consiglio di Mimmo</div><p class="q" id="tipq"></p><div class="who" id="tipw"></div></section>
 <section class="visit"><div><div class="ph" data-bg="banco" role="img" aria-label="Il banco di Mimmo al mercato"></div><div class="ph-cap">Il banco di Mimmo, al ${BIZ.place}.</div></div><div><div class="ey">Vieni a trovarci</div><h2 class="h2">al mercato, <em>dietro il banco.</em></h2>
-<div class="vgrid"><div><h4>Dove</h4><p>${BIZ.place}, ${BIZ.address}</p><p><span class="chip-tbc">numero banco da confermare</span></p><p><a href="${BIZ.maps}" target="_blank" rel="noopener">Apri la mappa →</a></p></div>
-<div><h4>Quando</h4><p><span class="chip-tbc">giorni e orari da confermare con Mimmo</span></p></div>
+<div class="vgrid"><div><h4>Dove</h4><p>${BIZ.place2}<br>${BIZ.address}</p><p><a href="${BIZ.maps}" target="_blank" rel="noopener">Apri la mappa →</a></p></div>
+<div><h4>Quando</h4>${hoursHTML()}</div>
 <div><h4>Come</h4><p><a href="${waGeneric}" target="_blank" rel="noopener">WhatsApp ${BIZ.phoneDisplay}</a> · <a href="tel:+${BIZ.phoneIntl}">Chiama</a></p><p><a href="mailto:${BIZ.email}">${BIZ.email}</a></p></div></div></div></section>
 <section class="wa"><div class="wa-in"><div><div class="ey">Su WhatsApp</div><h2 class="h2">non sai cosa prendere? <em>chiedi a Mimmo.</em></h2><p>Digli cosa vuoi cucinare e per quante persone: il taglio te lo consiglia lui.</p></div><a class="btn btn-wa" href="${waGeneric}" target="_blank" rel="noopener">Scrivi su WhatsApp</a></div></section>`;
   },
@@ -744,7 +760,8 @@ ${bancoHTML()}
   },
   ordine() { return listPageHTML(); },
   mimmo() { return pageMimmo(); },
-  dove() { return pageDove(); }
+  dove() { return pageDove(); },
+  privacy() { return pagePrivacy(); }
 };
 let tipT = null;
 function route() {
